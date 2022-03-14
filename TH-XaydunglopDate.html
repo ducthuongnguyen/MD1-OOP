@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class MyDate {
+        constructor(day, month, year) {
+            this.day = day;
+            this.month = month;
+            this.year = year;
+        }
+
+        getDay() {
+            return this.day;
+        }
+
+        getMonth() {
+            return this.month;
+        }
+
+        getYear() {
+            return this.year;
+        }
+
+        setDay(day) {
+            this.day = day;
+        }
+
+        setMonth(month) {
+            this.month = month;
+        }
+
+        setYear(year) {
+            this.year = year;
+        }
+    }
+
+    let date = new MyDate(8, 3, 2022);
+
+    let day = date.setDay(9);
+
+    class Hours extends MyDate {
+        constructor(day, month, year, hour, status) {
+            super(day, month, year);
+            this.hour = hour;
+            this.status = true;
+        }
+
+        setHour(hour) {
+            this.hour = hour;
+        }
+
+        getHour(hour) {
+            return this.hour;
+        }
+        increaseYear(){
+            this.year++;
+        }
+        changeStatus(){
+            this.status = !this.status;
+        }
+    }
+
+    let newHour = new Hours(8,3,2000,21);
+</script>
+
+</body>
+</html>

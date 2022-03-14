@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Di chuyen don gian</title>
+</head>
+<body>
+<img id="pika" style="width: 150px;  height: 200px; position: relative;top: 50px;left: 60px" src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712__480.png" alt="pikachu">;
+<script>
+    let avt = document.getElementById('pika');
+    let speed = 10;
+    function moveHoziron() {
+        let top = parseInt(avt.style.left);
+        if (top>300 || top <0){
+            speed = -speed;
+        }
+        avt.style.left = parseInt(avt.style.left)+ speed + 'px';
+    }
+    setInterval(moveHoziron,100)
+</script>
+</body>
+</html>

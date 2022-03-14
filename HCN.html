@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<table border="1px" cellspacing="0">
+    <tr>
+        <td>Enter the width:</td>
+        <td><input type="number" id="width"></td>
+    </tr>
+    <tr>
+        <td>Enter the length:</td>
+        <td><input type="number" id="length"></td>
+    </tr>
+    <tr>
+    <td>Perimeter of rectangle</td>
+    <td id="peri"></td>
+    </tr>
+    <tr>
+        <td>Area of rectangle</td>
+        <td id="area"></td>
+    </tr>
+    <tr>
+        <td><button onclick="showResult()">Result</button></td>
+        <td><button onclick="resetResult()">Reset</button></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <canvas style="border: 1px solid darkred; width: 700px; height: 400px" id="myCanvas"></canvas>
+        </td>
+    </tr>
+</table>
+<script>
+    class Rectangle {
+        length;
+        width;
+
+        constructor(length, width) {
+            this.length = length;
+            this.width = width;
+        }
+        getLength(){
+            return this.length;
+        }
+        setLength(length){
+            this.length = length;
+        }
+        getWidth(){
+            return this.width;
+        }
+        calArea(){
+            return this.length*this.width;
+        }
+        calPeri(){
+            return 2*this.width+ 2* this.length;
+        }
+    }
+    let myCanvas = document.getElementById('myCanvas');
+    let ctx = myCanvas.getContext('2d');
+
+    function showResult() {
+        let width = +document.getElementById('width').value;
+        let length = +document.getElementById('length').value;
+        let rectangle = new Rectangle(length,width);
+        ctx.beginPath()
+        ctx.strokeStyle  = '#fa4b2a';
+        ctx.strokeRect(100,50,width,length);
+        ctx.stroke();
+        let area = rectangle.calArea();
+        document.getElementById('area').innerHTML = area;
+        let peri = rectangle.calPeri();
+        document.getElementById('peri').innerHTML = peri;
+    }
+
+    function resetResult() {
+        document.getElementById('width').value = '';
+        document.getElementById('length').value='';
+        document.getElementById('area').innerHTML = '';
+        document.getElementById('peri').innerHTML = '';
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height)
+    }
+</script>
+
+</body>
+</html>

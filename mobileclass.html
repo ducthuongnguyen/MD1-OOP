@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>IPHONE</h2>
+<button id="status-iphone" onclick="checkStatus(this.id)">Power</button>
+<button id="battery-iphone" onclick="checkBattery(this.id)">Battery</button>
+<button id="inbox-iphone" onclick="checkInbox(this.id)">Inbox</button>
+<button id="outbox-iphone" onclick="sendMessage(this.id)">Send</button>
+<br><br>
+<textarea id="iphone" cols="30" rows="10"></textarea>
+
+
+<h2>SAMSUNG</h2>
+<button id="status-samsung" onclick="checkStatus(this.id)">Power</button>
+<button id="battery-samsung" onclick="checkBattery(this.id)">Battery</button>
+<button id="inbox-samsung" onclick="checkInbox(this.id)">Inbox</button>
+<button id="outbox-samsung" onclick="sendMessage(this.id)">Send</button>
+
+<br><br>
+<textarea id="samsung" cols="30" rows="10"></textarea>
+
+
+</body>
+<script>
+    class Mobile {
+        constructor(battery, name, inbox, outbox, status) {
+            this.battery = battery;
+            this.name = name;
+            this.inbox = [];
+            this.outbox = [];
+            this.status = status;
+        }
+
+        getStatus() {
+            return this.status;
+        }
+
+        setStatus(status) {
+            this.status = !this.status;
+        }
+
+        getBattery() {
+            return this.battery;
+        }
+
+        setBattery(battery) {
+            this.battery = battery;
+        }
+
+        getName() {
+            return this.name;
+        }
+
+        setName(name) {
+            this.name = name;
+        }
+
+        getInbox() {
+            return this.inbox;
+        }
+
+        setInbox(inbox) {
+            this.inbox = inbox;
+        }
+
+        getOutbox() {
+            return this.outbox;
+        }
+
+        setOutbox(outbox) {
+            this.outbox = outbox;
+        }
+    }
+
+    let iPhone = new Mobile(100, 'iphone');
+    let samsung = new Mobile(100, 'samsung');
+
+    function checkStatus(id) {
+        if (id === 'status-iphone') {
+            console.log('check id ==== ', id)
+            if (iPhone.getStatus()) {
+                iPhone.setStatus();
+                document.getElementById('status-iphone').innerHTML = 'OFF';
+                document.getElementById('iphone').disabled = true;
+
+            } else {
+                iPhone.setStatus();
+                console.log(iPhone.getStatus())
+                document.getElementById('status-iphone').innerText = 'ON';
+
+            }
+        } else if (id === 'status-samsung') {
+            if (samsung.getStatus()) {
+                samsung.setStatus();
+                document.getElementById('status-samsung').innerHTML = 'OFF';
+                document.getElementById('samsung').disabled = true;
+
+            } else {
+                samsung.setStatus();
+                document.getElementById('status-samsung').innerText = 'ON';
+
+            }
+        }
+    }
+    
+    function checkBattery(id) {
+        if (id === 'battery-iphone') {
+            document.getElementById('battery-iphone').innerHTML = iPhone.getBattery() + ' %';
+
+        } else {
+            document.getElementById('battery-samsung').innerHTML = samsung.getBattery() + ' %';
+        }
+    }
+
+    let count = 0;
+
+    function sendMessage(id) {
+        if (!iPhone.getStatus()) {
+            return;
+        }
+        count++;
+        if (id === 'outbox-iphone') {
+            iPhone.getOutbox().push(document.getElementById('iphone').value);
+            console.log('outbox cua iphone --->', iPhone.getOutbox());
+            document.getElementById('samsung').value = 'You have ' + count + ' messages';
+            document.getElementById('iphone').value = '';
+        } else {
+            samsung.getOutbox().push(document.getElementById('samsung').value);
+            document.getElementById('iphone').value = 'You have ' + count + ' messages';
+            document.getElementById('samsung').value = '';
+        }
+    }
+
+    function checkInbox(id) {
+        if (id === 'inbox-samsung') {
+            samsung.setInbox(iPhone.getOutbox());
+            // console.log('inbox cuar ss',samsung.getInbox())
+            // console.log('outbox cua iphone', iPhone.getOutbox())
+            document.getElementById('samsung').value = samsung.getInbox().join(' - ');
+            // console.log('inbox cuar samsung', iPhone.getInbox())
+            count = 0;
+        } else {
+            iPhone.setInbox(samsung.getOutbox());
+            document.getElementById('iphone').value = iPhone.getInbox().join(' - ');
+        }
+    }
+
+    let myTimeOut;
+
+    function downBattery() {
+        iPhone.setBattery(iPhone.getBattery() -1);
+        console.log(iPhone.getBattery())
+        document.getElementById('battery-iphone').innerHTML = iPhone.getBattery() +'%';
+        samsung.setBattery(samsung.getBattery()-1);
+        document.getElementById('battery-samsung').innerHTML=samsung.getBattery() +'%';
+        myTimeOut = setTimeout(downBattery, 10000)
+    }
+
+    downBattery();
+</script>
+</html>
